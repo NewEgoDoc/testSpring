@@ -2,14 +2,21 @@ package hello.testSpring.order;
 
 import hello.testSpring.discount.DiscountPolicy;
 import hello.testSpring.discount.FixDiscountPolicy;
+import hello.testSpring.discount.RateDiscountPolicy;
 import hello.testSpring.member.Member;
 import hello.testSpring.member.MemberRepository;
 import hello.testSpring.member.MemoryMemberRepository;
 
 public class OrderServiceImpl implements OrderService{
 
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
-    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
+    private MemberRepository memberRepository;
+//    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
+    private DiscountPolicy discountPolicy;
+
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
